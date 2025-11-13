@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS DOM</title>
+</head>
+
+<body>
+
+    <div id="box1">ID选择器标签</div>
+    <div class="box2">类选择器标签</div>
+    <div>普通div标签</div>
+    <a href="#">跳转链接</a>
+
+    <button>点击按钮</button>
+
+    <script>
+        // 通过DOM方法获取元素，整体思路：先调用方法获取元素，再操作元素
+        var element_id = document.getElementById("box1");
+        console.log(element_id);
+
+        var element_class = document.getElementsByClassName("box2")[0];
+        console.log(element_class);
+
+        var element_tag = document.getElementsByTagName("div")[2];
+        console.log(element_tag);
+
+        // 解析文义并修改内容
+        element_id.innerHTML= '<a href="#">跳转链接</a>';
+        // 修改为纯文本
+        element_class.innerText= '<a href="#">跳转链接</a>';
+
+        element_tag.style.color='red';
+        element_tag.style.fontSize='20px';
+
+        //通过DOM属性绑定事件
+        // 先获取元素，然后给事件属性赋值（事件名加on前缀）
+
+        // 在JavaScript中通过元素的事件属性绑定
+        // 事件名同样加on前缀
+        // 只能绑定一个处理函数（后面的会覆盖前面的）
+        // 比HTML属性绑定更易维护
+        var button_element=document.getElementsByTagName("button")[0];  
+
+        button_element.onclick=function(){
+            alert("按钮被点击了，来自DOM属性绑定事件");
+        }
+
+        //通过addEventListener 绑定事件(匿名函数)
+
+        // 使用专门的addEventListener方法
+        // 事件名不加on前缀（用click而不是onclick）
+        // 可以为同一事件绑定多个处理函数
+        // 可以控制事件捕获/冒泡阶段
+        // 是现代推荐的方式
+        button_element.addEventListener('click',function(){
+            alert("按钮被点击了，来自addEventListener绑定事件");
+        });
+        //通过addEventListener 绑定事件(函数调用)
+        button_element.addEventListener('click', click_event);
+        function click_event(){
+            alert("按钮被点击了，来自addEventListener绑定事件");
+        }
+
+    </script>
+</body>
+
+</html>

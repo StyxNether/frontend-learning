@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS 基本语法</title>
+</head>
+
+<body>
+    <script>
+        var x;
+        let y=5;
+        const pi=3.14;
+        console.log(x,y,pi);
+        let text='Hello, JavaScript!';
+        console.log(text);
+        let empty_value=null;
+        console.log(empty_value);
+
+        let age=19;
+        if (age>18){
+            alert("成年人");
+        } else {
+            alert("未成年人");
+        }
+
+        let time=12;
+        if (time<12){
+            alert("上午好");
+        } else if (time<18){
+            alert("下午好");
+        } else {
+            alert("晚上好");
+        }
+
+        console.log("开始gor循环");
+        for (let i=0;i<5;i++){
+            console.log("循环次数："+i);
+        }
+
+        console.log("开始while循环");
+        let index=1;
+        while (index<=10){
+            console.log("当前index的值："+index);
+            index++;
+        }
+    </script>
+</body>
+
+</html>

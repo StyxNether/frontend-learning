@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS 导入方式</title>
+
+    <!-- 导入外部css文件（外部样式） -->
+    <link rel="stylesheet" href="./css/style.css">
+
+    <!-- 内部样式 -->
+    <style>
+        p {
+            color: rgb(165, 9, 237);
+            font-size: 25px;
+        }
+
+        h2 {
+            color: blue;
+        }
+    </style>
+
+</head>
+<body>
+    <p>CSS 导入方式示例</p>
+    <p style="color:aqua;">优先级：内联样式 > 内部样式 > 外部样式 </p>
+    <!-- 内联样式 -->
+    <h1 style="color: red;">一级标题标签(内联样式)</h1>
+    <h2>二级标题标签(内部样式)</h2>
+    <h3>三级标题标签(外部样式)</h3>
+</body>
+</html>

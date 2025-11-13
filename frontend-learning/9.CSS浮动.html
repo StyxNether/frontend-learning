@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS浮动详解</title>
+    <style>
+        /* 父容器样式 */
+        .father {
+            background-color: lightgray;
+            border: 3px solid black;
+            margin-bottom: 20px;
+            /* 方法1: 使用overflow清除浮动 */
+            overflow: hidden;
+        }
+        
+        /* 方法2: 使用伪元素清除浮动（更现代的方法） */
+        .father::after {
+            content: ""; /* 必需 - 生成内容 */
+            display: table; /* 确保伪元素是块级元素 */
+            clear: both; /* 清除左右两侧的浮动 */
+        }
+        
+        /* 左侧子元素 */
+        .left-son {
+            width: 200px;
+            height: 200px;
+            background-color: lightblue;
+            float: left; /* 元素向左浮动，脱离正常文档流 */
+            margin: 10px;
+            text-align: center;
+            line-height: 200px; /* 垂直居中文本 */
+        }
+        
+        /* 右侧子元素 */
+        .right-son {
+            width: 200px;
+            height: 200px;
+            background-color: lightcoral;
+            float: right; /* 元素向右浮动，脱离正常文档流 */
+            margin: 10px;
+            text-align: center;
+            line-height: 200px; /* 垂直居中文本 */
+        }
+        
+        /* 普通段落，展示浮动对后续元素的影响 */
+        p {
+            background-color: lightgreen;
+            padding: 10px;
+            border: 1px solid darkgreen;
+        }
+        
+        /* 演示没有清除浮动的效果 */
+        .no-clear {
+            overflow: visible; /* 不应用清除浮动 */
+        }
+        
+        .no-clear::after {
+            content: none; /* 不生成伪元素 */
+        }
+        
+        /* 浮动原理说明区域 */
+        .explanation {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-left: 4px solid #3498db;
+        }
+        
+        /* 代码高亮 */
+        code {
+            background-color: #eee;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>CSS浮动详解</h1>
+    
+    <h2>1. 正常清除浮动的效果</h2>
+    <div class="father">
+        <div class="left-son">左浮动元素</div>
+        <div class="right-son">右浮动元素</div>
+    </div>
+    <p>父容器使用<code>overflow: hidden</code>和伪元素<code>::after</code>清除浮动，所以我能正常显示在浮动元素下方。</p>
+    
+    <h2>2. 未清除浮动的效果</h2>
+    <div class="father no-clear">
+        <div class="left-son">左浮动元素</div>
+        <div class="right-son">右浮动元素</div>
+    </div>
+    <p>父容器没有清除浮动，所以我被浮动元素"覆盖"了，这是因为浮动元素脱离了正常文档流。</p>
+    
+    <div class="explanation">
+        <h3>浮动原理说明</h3>
+        <ul>
+            <li><strong>浮动定义</strong>：<code>float</code>属性使元素脱离正常文档流，向左或向右移动，直到碰到父容器边缘或其他浮动元素</li>
+            <li><strong>浮动影响</strong>：浮动元素不再占据文档流中的空间，可能导致父容器高度塌陷</li>
+            <li><strong>清除浮动方法</strong>：
+                <ul>
+                    <li><code>overflow: hidden</code> - 触发BFC（块级格式化上下文）</li>
+                    <li>伪元素法 - 使用<code>::after</code>伪元素添加清除</li>
+                    <li>空div法 - 添加空div并设置<code>clear: both</code></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

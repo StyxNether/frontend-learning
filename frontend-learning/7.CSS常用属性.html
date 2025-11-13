@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS 常用属性</title>
+
+    <style>
+        .block {
+            background-color: lightblue;
+            width: 200px;
+            height: 100px;
+        }
+        .inline {
+            background-color: lightgreen;
+            width: 200px;
+            /* width和height属性对行内元素无效; */
+        }
+        .inline-block {
+            background-color: lightcoral;
+            width: 200px;
+        }
+        .div-inline {
+            display: inline;
+            background-color: lightgray;
+        }
+        .span-inline-block {
+            display: inline-block;
+            background-color: lightpink;
+            width: 300px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1 style="font:bolder 50px 'kaiti';">font复合属性示例</h1>
+    <p style="line-height: 50px;">长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本</p>
+
+    <div class="block">块元素</div>
+    <span class="inline">行内元素</span>
+    <img src="76432653_p0.png" alt="" class="inline-block">
+    <img src="76432653_p0.png" alt="" class="inline-block">
+
+    <h2>display</h2>
+    <div class="div-inline">转换成行内元素的div标签</div>
+    <span class="span-inline-block">转换成行内块元素的span标签</span>
+
+</body>
+
+</html>

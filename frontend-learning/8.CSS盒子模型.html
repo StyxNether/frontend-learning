@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS盒子模型详解</title>
+    <style>
+        * {
+            box-sizing: border-box; /* 设置所有元素为border-box模型 */
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        h1, h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .box {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .demo {
+            width: 300px;
+            height: 150px;
+            padding: 30px;
+            border: 10px solid #e74c3c;
+            margin: 20px;
+            background-color: #f1c40f;
+            text-align: center;
+            line-height: 90px; /* 150px - 30px*2 = 90px */
+            color: #2c3e50;
+            font-weight: bold;
+            position: relative;
+        }
+        
+        .dimensions {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+        .border-demo {
+            width: 300px;
+            height: 200px;
+            background-color: #ecf0f1;
+            margin: 20px auto;
+            padding: 20px;
+            text-align: center;
+            line-height: 160px; /* 200px - 20px*2 = 160px */
+            
+            /* 复合边框样式 - 四个方向不同 */
+            border-style: solid dashed dotted double;
+            border-width: 10px 5px 15px 20px; /* 上 右 下 左 */
+            border-color: #3498db #2ecc71 #e74c3c #f39c12;
+            
+            /* 单独设置左边框样式 - 会覆盖复合设置中的左边框 */
+            border-left: dotted #9b59b6 8px;
+        }
+        
+        .model-visualization {
+            position: relative;
+            margin: 40px auto;
+            width: 400px;
+            height: 300px;
+        }
+        
+        .margin-box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px dashed #95a5a6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .border-box {
+            width: 80%;
+            height: 80%;
+            border: 15px solid #e74c3c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .padding-box {
+            width: 70%;
+            height: 70%;
+            background-color: #3498db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .content-box {
+            width: 60%;
+            height: 60%;
+            background-color: #2ecc71;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .label {
+            position: absolute;
+            font-size: 14px;
+            color: #7f8c8d;
+            background: white;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .margin-label {
+            top: -20px;
+            left: 10px;
+        }
+        
+        .border-label {
+            top: 50%;
+            left: -60px;
+            transform: translateY(-50%);
+        }
+        
+        .padding-label {
+            top: 50%;
+            right: -60px;
+            transform: translateY(-50%);
+        }
+        
+        .content-label {
+            bottom: -20px;
+            right: 10px;
+        }
+        
+        .code-block {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .property-table th, .property-table td {
+            border: 1px solid #bdc3c7;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        .property-table th {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .property-table tr:nth-child(even) {
+            background-color: #ecf0f1;
+        }
+        
+        .note {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>CSS盒子模型详解</h1>
+    
+    <div class="note">
+        <strong>注意：</strong> 此页面已设置 <code>box-sizing: border-box</code>，这意味着元素的宽度和高度包括了内容、内边距和边框，但不包括外边距。
+    </div>
+    
+    <div class="container">
+        <div class="box">
+            <h2>基本盒子模型示例</h2>
+            <div class="demo">
+                <div class="dimensions">总尺寸: 300px × 150px</div>
+                内容区域
+            </div>
+            
+            <div class="code-block">
+/* CSS代码 */
+.demo {
+    width: 300px;        /* 内容宽度 */
+    height: 150px;       /* 内容高度 */
+    padding: 30px;       /* 内边距 */
+    border: 10px solid #e74c3c; /* 边框 */
+    margin: 20px;        /* 外边距 */
+    background-color: #f1c40f; /* 背景色 */
+}
+            </div>
+        </div>
+        
+        <div class="box">
+            <h2>边框样式示例</h2>
+            <div class="border-demo">
+                边框演示
+            </div>
+            
+            <div class="code-block">
+/* CSS边框代码 */
+.border-demo {
+    /* 复合边框 - 四个方向不同 */
+    border-style: solid dashed dotted double;
+    border-width: 10px 5px 15px 20px; /* 上 右 下 左 */
+    border-color: blue green red yellow;
+    
+    /* 单独设置左边框 - 覆盖复合设置 */
+    border-left: dotted red 5px;
+}
+            </div>
+        </div>
+    </div>
+    
+    <h2>盒子模型可视化</h2>
+    <div class="model-visualization">
+        <div class="margin-box">
+            <span class="label margin-label">外边距 (Margin)</span>
+            <div class="border-box">
+                <span class="label border-label">边框 (Border)</span>
+                <div class="padding-box">
+                    <span class="label padding-label">内边距 (Padding)</span>
+                    <div class="content-box">
+                        <span class="label content-label">内容 (Content)</span>
+                        实际内容
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <h2>盒子模型属性详解</h2>
+    <table class="property-table">
+        <thead>
+            <tr>
+                <th>属性</th>
+                <th>描述</th>
+                <th>示例值</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>width</code> / <code>height</code></td>
+                <td>设置内容区域的宽度和高度</td>
+                <td><code>300px</code>, <code>50%</code>, <code>auto</code></td>
+            </tr>
+            <tr>
+                <td><code>padding</code></td>
+                <td>内容与边框之间的空间</td>
+                <td><code>20px</code>, <code>10px 20px</code>, <code>5px 10px 15px 20px</code></td>
+            </tr>
+            <tr>
+                <td><code>border</code></td>
+                <td>围绕内容和内边距的边框</td>
+                <td><code>2px solid #000</code></td>
+            </tr>
+            <tr>
+                <td><code>margin</code></td>
+                <td>元素外部的空间，与其他元素分开</td>
+                <td><code>10px</code>, <code>10px auto</code>, <code>5px 10px 15px 20px</code></td>
+            </tr>
+            <tr>
+                <td><code>box-sizing</code></td>
+                <td>定义如何计算元素的宽度和高度</td>
+                <td><code>content-box</code>, <code>border-box</code></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="note">
+        <strong>提示：</strong> 使用 <code>box-sizing: border-box</code> 可以更直观地控制元素尺寸，因为它将边框和内边距包含在宽度和高度计算中。
+    </div>
+</body>
+</html>

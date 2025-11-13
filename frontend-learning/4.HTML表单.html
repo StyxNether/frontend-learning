@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<!-- 文档类型声明，告诉浏览器这是HTML5文档 -->
+<html lang="en">
+<!-- HTML文档根元素，lang="en"表示文档主要语言为英语 -->
+<head>
+    <!-- 文档头部，包含元数据和页面信息 -->
+    <meta charset="UTF-8">
+    <!-- 字符编码声明，确保正确显示UTF-8字符 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 视口设置，使页面在不同设备上正确显示，initial-scale=1.0表示初始缩放级别为100% -->
+    <title>HTML 表单</title>
+    <!-- 页面标题，显示在浏览器标签页上 -->
+</head>
+<body>
+    <!-- 文档主体，包含所有可见内容 -->
+    <h1>HTML 表单示例</h1>
+    <!-- 一级标题，页面主要内容标题 -->
+    
+    <!-- 表单开始 -->
+    <form action="/submit" method="post">
+        <!-- 
+        action属性：指定表单数据提交到的服务器端地址（/submit）
+        method属性：指定表单提交使用的HTTP方法（post）
+        post方法会将表单数据放在HTTP请求体中，适合提交敏感信息
+        -->
+        
+        <!-- 姓名输入字段 -->
+        <label for="name">姓名:</label>
+        <!-- 
+        label标签：为表单元素提供标签文本
+        for="name"属性：将标签与id="name"的表单元素关联
+        点击标签文本会聚焦到对应的输入框，提高可用性
+        -->
+        <input type="text" id="name" name="name" required>
+        <!-- 
+        input标签：创建文本输入框
+        type="text"：指定输入类型为文本
+        id="name"：元素的唯一标识符
+        name="name"：表单字段名称，用于服务器端识别
+        required：必需字段，提交前必须填写
+        -->
+        <br><br>
+        <!-- 换行标签，创建垂直间距 -->
+        
+        <!-- 电子邮件输入字段 -->
+        <label for="email">电子邮件:</label>
+        <input type="email" id="email" name="email" required>
+        <!-- 
+        type="email"：指定输入类型为电子邮件
+        浏览器会自动验证输入是否符合电子邮件格式
+        -->
+        <br><br>
+        
+        <!-- 密码输入字段 -->
+        <label for="password">密码:</label>
+        <input type="password" id="password" name="password" required>
+        <!-- 
+        type="password"：指定输入类型为密码
+        输入的字符会显示为圆点或星号，保护隐私
+        -->
+        <br><br>
+        
+        <!-- 年龄输入字段 -->
+        <label for="age">年龄:</label>
+        <input type="number" id="age" name="age" min="1" max="120">
+        <!-- 
+        type="number"：指定输入类型为数字
+        min="1"：允许的最小值
+        max="120"：允许的最大值
+        浏览器会显示数字输入控件（上下箭头）
+        -->
+        <br><br>
+        
+        <!-- 性别选择字段 -->
+        <label for="gender">性别:</label>
+        <select id="gender" name="gender">
+        <!-- 
+        select标签：创建下拉选择框
+        id="gender"：元素的唯一标识符
+        name="gender"：表单字段名称
+        -->
+            <option value="male">男</option>
+            <!-- 
+            option标签：定义下拉选项
+            value="male"：选项的值，提交到服务器
+            "男"：选项的显示文本
+            -->
+            <option value="female">女</option>
+            <option value="other">其他</option>
+        </select>
+        <br><br>
+        
+        <!-- 提交按钮 -->
+        <input type="submit" value="提交">
+        <!-- 
+        type="submit"：创建表单提交按钮
+        value="提交"：按钮上显示的文本
+        点击此按钮会将表单数据发送到action指定的URL
+        -->
+    </form>
+    <!-- 表单结束 -->
+</body>
+</html>

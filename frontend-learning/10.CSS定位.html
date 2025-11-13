@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS 定位</title>
+    <style>
+        .box1 {
+            height: 300px;
+            background-color: lightgray;
+        }
+        .box-normal {
+            width: 100px;
+            height: 100px;
+            background-color: steelblue;
+        }
+        .box-relative {
+            width: 100px;
+            height: 100px;
+            background-color: coral;
+            position: relative;
+            left: 120px;
+            top: 40px;
+        }
+
+        .box2 {
+            height: 300px;
+            background-color: yellowgreen;
+            margin-bottom: 500px;
+        }
+        .box-absolute {
+            width: 100px;
+            height: 100px;
+            background-color: tomato;
+            position: absolute;
+            left: 120px;
+            top: 600px;
+        }
+        .box-fixed {
+            width: 100px;
+            height: 100px;
+            background-color: purple;
+            position: fixed;
+            right: 0;
+            top: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>相对定位</h1>
+    <div class="box1">
+        <div class="box-normal"></div>
+        <div class="box-relative"></div>
+        <div class="box-normal"></div>
+    </div>
+
+    <!-- 无定位祖先 → 相对于 <html> 根元素
+    有定位祖先 → 相对于最近的定位祖先
+    特殊情况：如果给 <body> 设置 position: relative，则相对于 <body> -->
+
+    <h1>绝对定位</h1>
+    <div class="box2">
+        <div class="box-normal"></div>
+        <div class="box-absolute"></div>
+        <div class="box-normal"></div>
+    </div>
+    <h1>固定定位</h1>
+    <div class="box-fixed">
+        
+    </div>
+</body>
+
+</html>
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS定位详解</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+            padding-bottom: 100px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2c3e50, #4a6491);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eaecef;
+        }
+        
+        .position-container {
+            height: 300px;
+            background-color: #f8f9fa;
+            border: 2px dashed #bdc3c7;
+            border-radius: 8px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .position-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 14px;
+            color: #7f8c8d;
+            background: rgba(255,255,255,0.8);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        
+        .box {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* 静态定位 - 默认值 */
+        .static-box {
+            background-color: #3498db;
+            position: static;
+        }
+        
+        /* 相对定位 */
+        .relative-box {
+            background-color: #e74c3c;
+            position: relative;
+            left: 120px;
+            top: 40px;
+            z-index: 2;
+        }
+        
+        /* 绝对定位 */
+        .absolute-box {
+            background-color: #2ecc71;
+            position: absolute;
+            left: 50px;
+            top: 50px;
+            z-index: 3;
+        }
+        
+        /* 固定定位 */
+        .fixed-box {
+            background-color: #9b59b6;
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            z-index: 100;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        /* 粘性定位 */
+        .sticky-box {
+            background-color: #f39c12;
+            position: sticky;
+            top: 20px;
+            z-index: 10;
+            margin: 20px auto;
+            width: 80%;
+        }
+        
+        .explanation {
+            background-color: #e8f4fc;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .code-block {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .property-table th, .property-table td {
+            border: 1px solid #bdc3c7;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .property-table th {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .property-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .demo-content {
+            height: 800px;
+            padding: 20px;
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .demo-title {
+            text-align: center;
+            margin: 20px 0;
+            color: #2c3e50;
+        }
+        
+        .position-type {
+            display: inline-block;
+            background-color: #2c3e50;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #7f8c8d;
+            border-top: 1px solid #eaecef;
+        }
+        
+        @media (max-width: 768px) {
+            .section {
+                padding: 20px;
+            }
+            
+            .fixed-box {
+                right: 15px;
+                bottom: 15px;
+                width: 100px;
+                height: 100px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>CSS定位详解</h1>
+        <p class="subtitle">掌握五种CSS定位方式：static、relative、absolute、fixed和sticky</p>
+    </header>
+    
+    <div class="container">
+        <div class="section">
+            <h2 class="section-title">静态定位 (Static)</h2>
+            <p>静态定位是元素的默认定位方式，元素按照正常的文档流进行排列。</p>
+            
+            <div class="explanation">
+                <strong>特点：</strong> 不受top、bottom、left、right属性影响，元素处于正常文档流中。
+            </div>
+            
+            <div class="position-container">
+                <div class="position-label">容器</div>
+                <div class="box static-box">Static</div>
+                <div class="box" style="background-color: #95a5a6;">普通元素</div>
+                <div class="box" style="background-color: #95a5a6;">普通元素</div>
+            </div>
+            
+            <div class="code-block">
+.static-box {
+    position: static; /* 默认值，可省略 */
+    /* top、bottom、left、right属性无效 */
+}
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">相对定位 (Relative)</h2>
+            <p>相对定位的元素相对于其正常位置进行偏移，但原本所占的空间保留。</p>
+            
+            <div class="explanation">
+                <strong>特点：</strong> 相对于自身原始位置偏移，不影响其他元素布局，原本空间保留。
+            </div>
+            
+            <div class="position-container">
+                <div class="position-label">容器</div>
+                <div class="box" style="background-color: #95a5a6;">普通元素</div>
+                <div class="box relative-box">Relative</div>
+                <div class="box" style="background-color: #95a5a6;">普通元素</div>
+                <div class="box" style="background-color: #3498db; position: relative; left: 0; top: 0; opacity: 0.3;">
+                    原始位置
+                </div>
+            </div>
+            
+            <div class="code-block">
+.relative-box {
+    position: relative;
+    left: 120px;  /* 相对于原始位置向右移动120px */
+    top: 40px;    /* 相对于原始位置向下移动40px */
+}
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">绝对定位 (Absolute)</h2>
+            <p>绝对定位的元素相对于最近的已定位祖先元素进行定位，如果没有，则相对于文档主体。</p>
+            
+            <div class="explanation">
+                <strong>特点：</strong> 脱离正常文档流，不占据空间，相对于最近的定位祖先元素定位。
+            </div>
+            
+            <div class="position-container" style="position: relative;">
+                <div class="position-label">容器 (position: relative)</div>
+                <div class="box" style="background-color: #95a5a6;">普通元素</div>
+                <div class="box absolute-box">Absolute</div>
+                <div class="box" style="background-color: #95a5a6;">普通元素</div>
+            </div>
+            
+            <div class="code-block">
+/* 容器样式 */
+.position-container {
+    position: relative; /* 为绝对定位元素提供参考 */
+}
+
+.absolute-box {
+    position: absolute;
+    left: 50px;  /* 相对于容器的左边缘 */
+    top: 50px;   /* 相对于容器的上边缘 */
+}
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">固定定位 (Fixed)</h2>
+            <p>固定定位的元素相对于浏览器窗口进行定位，即使页面滚动，它也会停留在相同的位置。</p>
+            
+            <div class="explanation">
+                <strong>特点：</strong> 脱离正常文档流，相对于浏览器视口定位，不随页面滚动而移动。
+            </div>
+            
+            <div class="position-container" style="height: 200px;">
+                <div class="position-label">容器</div>
+                <p style="text-align: center; padding-top: 80px;">固定定位元素相对于浏览器窗口定位，请查看页面右下角</p>
+            </div>
+            
+            <div class="code-block">
+.fixed-box {
+    position: fixed;
+    right: 30px;   /* 相对于浏览器窗口右边缘 */
+    bottom: 30px;  /* 相对于浏览器窗口下边缘 */
+}
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">粘性定位 (Sticky)</h2>
+            <p>粘性定位是相对定位和固定定位的混合。元素在跨越特定阈值前为相对定位，之后为固定定位。</p>
+            
+            <div class="explanation">
+                <strong>特点：</strong> 基于用户的滚动位置在相对定位和固定定位之间切换。
+            </div>
+            
+            <h3 class="demo-title">滚动演示区域</h3>
+            <div class="demo-content">
+                <div class="sticky-box">
+                    <span class="position-type">Sticky</span>
+                    <p>滚动页面，当我到达顶部时，我会固定在那里</p>
+                </div>
+                
+                <p style="margin-top: 50px;">继续向下滚动查看效果...</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+            
+            <div class="code-block">
+.sticky-box {
+    position: sticky;
+    top: 20px; /* 当元素距离视口顶部20px时变为固定定位 */
+}
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">定位属性总结</h2>
+            
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>定位方式</th>
+                        <th>参考点</th>
+                        <th>是否脱离文档流</th>
+                        <th>特点</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>static</code></td>
+                        <td>正常文档流</td>
+                        <td>否</td>
+                        <td>默认值，不受定位属性影响</td>
+                    </tr>
+                    <tr>
+                        <td><code>relative</code></td>
+                        <td>自身原始位置</td>
+                        <td>否</td>
+                        <td>偏移不影响其他元素，原本空间保留</td>
+                    </tr>
+                    <tr>
+                        <td><code>absolute</code></td>
+                        <td>最近定位祖先元素</td>
+                        <td>是</td>
+                        <td>脱离文档流，不占空间</td>
+                    </tr>
+                    <tr>
+                        <td><code>fixed</code></td>
+                        <td>浏览器视口</td>
+                        <td>是</td>
+                        <td>不随页面滚动，始终在视口中固定位置</td>
+                    </tr>
+                    <tr>
+                        <td><code>sticky</code></td>
+                        <td>视口和父元素</td>
+                        <td>否/是</td>
+                        <td>滚动到阈值前相对定位，之后固定定位</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="fixed-box">
+        <span class="position-type">Fixed</span>
+        固定定位元素
+    </div>
+    
+    <footer>
+        <p>CSS定位详解 &copy; 2023 - 演示页面</p>
+    </footer>
+</body>
+</html>
